@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harshitha Bommi — Software Engineer &amp; ML Systems</title>
+<meta name="description" content="Harshitha Bommi — Software engineer working on enterprise data systems, LLM fine-tuning, and AI agent infrastructure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF0EC;
+    --paper-raised:#F6F7F4;
+    --ink:#161B18;
+    --muted:#5B655F;
+    --line:#D3D6CE;
+    --line-strong:#B7BCB2;
+    --accent:#1F6F5C;
+    --accent-ink:#0F3E33;
+    --accent-soft:#DCE8E2;
+    --highlight:#B4732A;
+    --sans: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sidebar-w: 250px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--accent-soft);color:var(--accent-ink);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- layout shell ---------- */
+  .shell{
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    position:fixed;
+    top:0; left:0; bottom:0;
+    border-right:1px solid var(--line);
+    padding:32px 28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    z-index:20;
+  }
+  .sidebar-top{display:flex; flex-direction:column; gap:40px;}
+  .mark{
+    font-family:var(--mono);
+    font-size:14px;
+    font-weight:600;
+    color:var(--accent-ink);
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+  }
+  .mark .dot{color:var(--accent); font-size:18px; line-height:0;}
+
+  .schema-label{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+    margin-bottom:10px;
+  }
+
+  nav.toc{display:flex; flex-direction:column;}
+  nav.toc a{
+    text-decoration:none;
+    font-size:14.5px;
+    color:var(--muted);
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    transition:color .15s ease;
+  }
+  nav.toc a:last-child{border-bottom:1px solid var(--line);}
+  nav.toc a:hover{color:var(--ink);}
+  nav.toc a .idx{font-family:var(--mono); font-size:11px; color:var(--line-strong);}
+  nav.toc a.active{color:var(--accent-ink); font-weight:600;}
+  nav.toc a.active .idx{color:var(--accent);}
+
+  .sidebar-bottom{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .sidebar-bottom a{text-decoration:none; color:var(--muted);}
+  .sidebar-bottom a:hover{color:var(--accent-ink);}
+  .status-row{display:flex; align-items:center; gap:7px; color:var(--accent-ink);}
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0;}
+
+  /* ---------- mobile topbar ---------- */
+  .topbar{
+    display:none;
+    position:sticky; top:0;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:16px 20px;
+    align-items:center;
+    justify-content:space-between;
+    z-index:30;
+  }
+  .topbar button{
+    font-family:var(--mono);
+    font-size:12px;
+    background:none;
+    border:1px solid var(--line-strong);
+    padding:7px 12px;
+    border-radius:3px;
+    color:var(--ink);
+  }
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    background:var(--paper-raised);
+    border-bottom:1px solid var(--line);
+    padding:6px 20px 14px;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    text-decoration:none; color:var(--ink);
+    font-size:15px; padding:10px 0;
+    border-top:1px solid var(--line);
+  }
+
+  /* ---------- main ---------- */
+  main{
+    margin-left:var(--sidebar-w);
+    flex:1;
+    max-width:760px;
+    padding:64px 56px 120px;
+  }
+  section{padding-top:8px; margin-bottom:88px; scroll-margin-top:32px;}
+  section:last-of-type{margin-bottom:60px;}
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:28px;
+  }
+  .section-head .key{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .section-head h2{
+    font-size:22px;
+    font-weight:600;
+    margin:0;
+  }
+  .section-head .rule{flex:1; height:1px; background:var(--line);}
+
+  /* ---------- hero / record card ---------- */
+  .hero{margin-bottom:100px;}
+  .record{
+    border:1px solid var(--line-strong);
+    background:var(--paper-raised);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .record-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 20px;
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .record-head .beacon{width:7px;height:7px;border-radius:50%;background:var(--accent);}
+  .record-body{padding:28px 28px 30px;}
+  .kv-row{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:16px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    align-items:baseline;
+  }
+  .kv-row:first-child{padding-top:0;}
+  .kv-row:last-child{border-bottom:none; padding-bottom:0;}
+  .kv-row .k{font-family:var(--mono); font-size:12.5px; color:var(--muted);}
+  .kv-row .v{font-size:16px;}
+  .kv-row .v.name{
+    font-size:34px;
+    font-weight:700;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .kv-row .v.tagline{color:var(--ink); font-size:16.5px; line-height:1.55;}
+  .cursor{
+    display:inline-block;
+    width:9px; height:1.05em;
+    background:var(--accent);
+    margin-left:2px;
+    vertical-align:text-bottom;
+    animation:blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+
+  .hero-actions{display:flex; gap:12px; margin-top:22px;}
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    text-decoration:none;
+    padding:10px 16px;
+    border-radius:3px;
+    border:1px solid var(--line-strong);
+    color:var(--ink);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn.primary:hover{background:var(--accent-ink); border-color:var(--accent-ink);}
+  .btn:not(.primary):hover{border-color:var(--ink);}
+
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border:1px solid var(--line);
+    border-top:none;
+    background:var(--paper-raised);
+  }
+  .stat{
+    padding:16px 18px;
+    border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .n{font-family:var(--mono); font-size:20px; font-weight:600; color:var(--accent-ink);}
+  .stat .l{font-size:12.5px; color:var(--muted); margin-top:2px;}
+
+  /* ---------- about ---------- */
+  .about-text p{margin:0 0 16px; max-width:64ch;}
+  .about-text p:last-child{margin-bottom:0;}
+  .about-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px;}
+  .tag{
+    font-family:var(--mono); font-size:12px;
+    border:1px solid var(--line-strong);
+    padding:5px 9px;
+    border-radius:3px;
+    color:var(--muted);
+    background:var(--paper-raised);
+  }
+
+  .field-groups{margin-top:36px; display:flex; flex-direction:column; gap:0;}
+  .field-group{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:18px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+  }
+  .field-group:last-child{border-bottom:1px solid var(--line);}
+  .field-group .fg-label{font-family:var(--mono); font-size:12.5px; color:var(--muted); padding-top:2px;}
+  .field-group .fg-value{display:flex; flex-wrap:wrap; gap:7px;}
+
+  /* ---------- experience table ---------- */
+  .xp-row{
+    border-top:1px solid var(--line);
+    padding:22px 0;
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:22px;
+  }
+  .xp-row:last-child{border-bottom:1px solid var(--line);}
+  .xp-meta{display:flex; flex-direction:column; gap:4px;}
+  .xp-meta .period{font-family:var(--mono); font-size:12px; color:var(--muted);}
+  .xp-meta .loc{font-size:13px; color:var(--muted);}
+  .xp-status{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:11px; color:var(--accent-ink);
+    margin-top:2px;
+  }
+  .xp-status .d{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  .xp-status.past .d{background:var(--line-strong);}
+  .xp-status.past{color:var(--muted);}
+
+  .xp-body h3{margin:0 0 2px; font-size:17.5px; font-weight:600;}
+  .xp-body .org{font-size:14px; color:var(--muted); margin-bottom:12px;}
+  .xp-body ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:7px;}
+  .xp-body li{font-size:15.5px;}
+  .xp-body li b{font-weight:600; color:var(--accent-ink);}
+  .xp-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;}
+
+  /* ---------- projects ---------- */
+  .proj-list{display:flex; flex-direction:column;}
+  .proj{
+    border-top:1px solid var(--line);
+    padding:22px 0;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .proj:last-child{border-bottom:1px solid var(--line);}
+  .proj-top{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .proj-top h3{margin:0; font-size:17px; font-weight:600;}
+  .proj-badge{font-family:var(--mono); font-size:11px; color:var(--accent-ink); background:var(--accent-soft); padding:3px 8px; border-radius:3px; white-space:nowrap;}
+  .proj p{margin:0; font-size:15.5px; max-width:60ch; color:var(--ink);}
+  .proj-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;}
+  .proj-links{display:flex; gap:16px; margin-top:10px;}
+  .proj-links a{font-family:var(--mono); font-size:12.5px; color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--accent);}
+  .proj-links a:hover{color:var(--accent);}
+
+  /* ---------- skills ---------- */
+  .skill-groups{display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line);}
+  .skill-group{border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:18px 20px;}
+  .skill-group .sg-title{font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:10px;}
+  .skill-group .sg-items{display:flex; flex-wrap:wrap; gap:6px;}
+
+  /* ---------- contact ---------- */
+  .contact-grid{
+    border:1px solid var(--line);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .contact-item{
+    padding:18px 20px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    transition:background .15s ease;
+  }
+  .contact-item:nth-child(2n){border-right:none;}
+  .contact-item:hover{background:var(--paper-raised);}
+  .contact-item .ck{font-family:var(--mono); font-size:11px; color:var(--muted);}
+  .contact-item .cv{font-size:15.5px; font-weight:500; word-break:break-word;}
+
+  footer{
+    margin-left:var(--sidebar-w);
+    padding:26px 56px 40px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    border-top:1px solid var(--line);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 880px){
+    .sidebar{display:none;}
+    .topbar{display:flex;}
+    main{margin-left:0; padding:44px 22px 90px; max-width:100%;}
+    footer{margin-left:0; padding:22px 22px 34px;}
+    .kv-row{grid-template-columns:100px 1fr;}
+    .kv-row .v.name{font-size:26px;}
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
+    .field-group{grid-template-columns:1fr; gap:6px;}
+    .xp-row{grid-template-columns:1fr; gap:10px;}
+    .skill-groups{grid-template-columns:1fr;}
+    .skill-group:nth-child(2n){border-right:1px solid var(--line);}
+    .contact-grid{grid-template-columns:1fr;}
+    .contact-item:nth-child(2n){border-right:1px solid var(--line);}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="mark">HB<span class="dot">·</span></span>
+  <button id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#skills">Skills</a>
+  <a href="#certifications">Certifications</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="mark">HB<span class="dot">·</span></div>
+      <div>
+        <div class="schema-label">table of contents</div>
+        <nav class="toc" id="toc">
+          <a href="#about" data-idx="01"><span>About</span><span class="idx">01</span></a>
+          <a href="#experience" data-idx="02"><span>Experience</span><span class="idx">02</span></a>
+          <a href="#projects" data-idx="03"><span>Projects</span><span class="idx">03</span></a>
+          <a href="#skills" data-idx="04"><span>Skills</span><span class="idx">04</span></a>
+          <a href="#certifications" data-idx="05"><span>Certifications</span><span class="idx">05</span></a>
+          <a href="#contact" data-idx="06"><span>Contact</span><span class="idx">06</span></a>
+        </nav>
+      </div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="status-row"><span class="status-dot"></span>Open to new work</div>
+      <a href="mailto:harshithabommi2024@gmail.com">harshithabommi2024@gmail.com</a>
+      <a href="https://github.com/harshithabommi2025" target="_blank" rel="noopener">github.com/harshithabommi2025</a>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="record">
+        <div class="record-head"><span class="beacon"></span>record · engineer/001</div>
+        <div class="record-body">
+          <div class="kv-row">
+            <span class="k">name</span>
+            <span class="v name">Harshitha Bommi<span class="cursor"></span></span>
+          </div>
+          <div class="kv-row">
+            <span class="k">role</span>
+            <span class="v">Software Engineer · M.S. Computer Science, UCO</span>
+          </div>
+          <div class="kv-row">
+            <span class="k">focus</span>
+            <span class="v tagline">Fine-tuning open-weight LLMs, building tool-calling LLM agents, and shipping production AI systems — results measured on benchmarks and quantified in production.</span>
+          </div>
+          <div class="kv-row">
+            <span class="k">based</span>
+            <span class="v">Edmond, OK</span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><div class="n">3+</div><div class="l">years coding</div></div>
+        <div class="stat"><div class="n">4</div><div class="l">companies</div></div>
+        <div class="stat"><div class="n">6+</div><div class="l">projects</div></div>
+        <div class="stat"><div class="n">15%</div><div class="l">LLM accuracy gain</div></div>
+      </div>
+      <div class="hero-actions">
+        <a class="btn primary" href="#projects">View projects</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head"><span class="key">01</span><h2>About</h2><span class="rule"></span></div>
+      <div class="about-text">
+        <p>I'm an M.S. Computer Science researcher and AI engineer with hands-on experience fine-tuning open-weight LLMs (LoRA, SFT), building LLM agents with tool-calling and multi-step reasoning, and deploying production-grade AI systems. I measure results on benchmarks and quantify them in production.</p>
+        <p>At Technet Inc., I worked within the Database team on SMUD's billing systems — owning MySQL schema and query logic for production-scale billing and usage data, fine-tuning LLMs on that data, and building MCP servers that bridge AI agents with real-world enterprise data sources.</p>
+        <p>I combine research rigor — an RCSA grant-funded project, ablation studies, documented benchmarks — with practical engineering depth across startup and enterprise environments.</p>
+      </div>
+      <div class="field-groups">
+        <div class="field-group">
+          <span class="fg-label">education</span>
+          <span class="fg-value">M.S. Computer Science, University of Central Oklahoma</span>
+        </div>
+        <div class="field-group">
+          <span class="fg-label">research</span>
+          <span class="fg-value">RCSA grant — AI-assisted code feedback systems</span>
+        </div>
+        <div class="field-group">
+          <span class="fg-label">coursework</span>
+          <span class="fg-value">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">Artificial Intelligence</span>
+            <span class="tag">Cloud Computing</span>
+            <span class="tag">Database Systems</span>
+            <span class="tag">Software Engineering</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-head"><span class="key">02</span><h2>Experience</h2><span class="rule"></span></div>
+
+      <div class="xp-row">
+        <div class="xp-meta">
+          <span class="period">Aug 2026 — Present</span>
+          <span class="loc">Edmond, OK</span>
+          <span class="xp-status"><span class="d"></span>current</span>
+        </div>
+        <div class="xp-body">
+          <h3>Teaching Assistant — Algorithms of ML &amp; Programming</h3>
+          <div class="org">University of Central Oklahoma</div>
+          <ul>
+            <li>Mentor <b>25+ students</b>; review and debug Python code, document error patterns, and translate complex ML concepts into clear technical explanations.</li>
+          </ul>
+          <div class="xp-tags">
+            <span class="tag">Python</span><span class="tag">Algorithms</span><span class="tag">Mentoring</span><span class="tag">Code Review</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-row">
+        <div class="xp-meta">
+          <span class="period">Jun 2026 — Jul 2026</span>
+          <span class="loc">Sacramento, CA</span>
+          <span class="xp-status past"><span class="d"></span>past</span>
+        </div>
+        <div class="xp-body">
+          <h3>Software Engineer Intern</h3>
+          <div class="org">Technet Inc. — Database team, on-site at SMUD</div>
+          <ul>
+            <li>Worked within the <b>Database team</b> on SMUD's billing systems — owning MySQL schema and query logic for production-scale customer billing, usage, and rate calculation data.</li>
+            <li>Fine-tuned open-weight LLMs via <b>LoRA and SFT</b> with layer-freezing on billing and operations data; measured a <b>15% accuracy gain</b> on domain-specific evaluation benchmarks.</li>
+            <li>Architected <b>MCP-based LLM agents</b> with tool-calling and multi-step reasoning loops, cutting enterprise data-retrieval overhead by <b>40%</b>.</li>
+          </ul>
+          <div class="xp-tags">
+            <span class="tag">MySQL</span><span class="tag">Billing Systems</span><span class="tag">LoRA</span><span class="tag">SFT</span><span class="tag">MCP Agents</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-row">
+        <div class="xp-meta">
+          <span class="period">Jan 2026 — May 2026</span>
+          <span class="loc">Edmond, OK</span>
+          <span class="xp-status past"><span class="d"></span>past</span>
+        </div>
+        <div class="xp-body">
+          <h3>Graduate Research Assistant</h3>
+          <div class="org">University of Central Oklahoma</div>
+          <ul>
+            <li>Evaluated ML research papers; documented experimental findings, improvement strategies, and benchmarking methodology for reproducible research outcomes.</li>
+          </ul>
+          <div class="xp-tags">
+            <span class="tag">ML Research</span><span class="tag">Benchmarking</span><span class="tag">Academic Review</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-row">
+        <div class="xp-meta">
+          <span class="period">Jan 2024 — Dec 2024</span>
+          <span class="loc">Remote</span>
+          <span class="xp-status past"><span class="d"></span>past</span>
+        </div>
+        <div class="xp-body">
+          <h3>Junior Software Engineer</h3>
+          <div class="org">CloudOne AI Robotics</div>
+          <ul>
+            <li>Shipped a production-ready <b>Mistral 7B voice chatbot</b> end-to-end using RAG, prompt engineering, and STT/TTS API integration.</li>
+            <li>Achieved <b>sub-500ms</b> real-time response latency; iterated on model performance through systematic testing and prompt ablations.</li>
+          </ul>
+          <div class="xp-tags">
+            <span class="tag">Mistral 7B</span><span class="tag">RAG</span><span class="tag">STT/TTS</span><span class="tag">Prompt Ablations</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-row">
+        <div class="xp-meta">
+          <span class="period">May 2023 — Dec 2023</span>
+          <span class="loc">Visakhapatnam, India</span>
+          <span class="xp-status past"><span class="d"></span>past</span>
+        </div>
+        <div class="xp-body">
+          <h3>Software / Web Developer</h3>
+          <div class="org">Shiftwave Technologies</div>
+          <ul>
+            <li>Built responsive web dashboards and optimized MySQL queries; implemented PHP backend logic to improve application performance.</li>
+          </ul>
+          <div class="xp-tags">
+            <span class="tag">MySQL</span><span class="tag">PHP</span><span class="tag">Web Dashboards</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head"><span class="key">03</span><h2>Projects</h2><span class="rule"></span></div>
+      <div class="proj-list">
+        <div class="proj">
+          <div class="proj-top">
+            <h3>AI-Assisted Code Feedback System</h3>
+            <span class="proj-badge">RCSA grant-funded</span>
+          </div>
+          <p>PyLearn — an LLM-based Python learning system for introductory CS learners: 15 guided modules combining pylint static analysis with LLM-generated feedback and a built-in rule-based feedback engine, so learners get step-by-step correction guidance on their own code.</p>
+          <div class="proj-tags"><span class="tag">Python</span><span class="tag">LLM APIs</span><span class="tag">Pylint</span><span class="tag">Streamlit</span></div>
+          <div class="proj-links"><a href="https://pyleran.streamlit.app/" target="_blank" rel="noopener">Live demo →</a></div>
+        </div>
+        <div class="proj">
+          <div class="proj-top">
+            <h3>Fleet Dispatch Simulator</h3>
+            <span class="proj-badge">2026 — Present</span>
+          </div>
+          <p>Built a self-service simulation environment letting non-specialists compare dispatch and vehicle-assignment algorithms without code. Designed fleet-efficiency metrics with paired t-tests — batched matching cut rider wait time by <b>57%</b> and empty miles by <b>53%</b> versus a greedy baseline.</p>
+          <div class="proj-tags"><span class="tag">Python</span><span class="tag">SimPy</span><span class="tag">SciPy</span><span class="tag">FastAPI</span><span class="tag">MySQL</span><span class="tag">Streamlit</span></div>
+          <div class="proj-links"><a href="https://bommifleetsim.streamlit.app" target="_blank" rel="noopener">Live demo →</a><a href="https://github.com/harshithabommi2025/Fleet-Dispatch-Simulator" target="_blank" rel="noopener">View code →</a></div>
+        </div>
+        <div class="proj">
+          <div class="proj-top">
+            <h3>GridLedger — Utility Billing Platform</h3>
+            <span class="proj-badge">2026 — Present</span>
+          </div>
+          <p>Built a cloud-native utility billing platform: meters feed readings that automatically generate invoices, paid through a separate payments ledger. Deployed to AWS (RDS, ECR, ECS Fargate) with Flyway schema migrations, Docker, and GitHub Actions CI.</p>
+          <div class="proj-tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">PostgreSQL</span><span class="tag">AWS</span><span class="tag">Docker</span></div>
+          <div class="proj-links"><a href="https://github.com/harshithabommi2025/gridledger-aws" target="_blank" rel="noopener">View code →</a></div>
+        </div>
+        <div class="proj">
+          <div class="proj-top">
+            <h3>LLM Evaluation Harness — Code Review</h3>
+            <span class="proj-badge">active</span>
+          </div>
+          <p>Built an LLM evaluation harness for automated code review — designing benchmark tasks and statistical reporting to measure reliability and bug-detection accuracy.</p>
+          <div class="proj-tags"><span class="tag">Python</span><span class="tag">LLM APIs</span><span class="tag">Benchmarking</span></div>
+        </div>
+        <div class="proj">
+          <div class="proj-top">
+            <h3>Data Analysis Dashboard</h3>
+            <span class="proj-badge">2023</span>
+          </div>
+          <p>Built automated SQL ETL pipelines and an interactive Power BI dashboard surfacing actionable academic insights for data-driven leadership decisions.</p>
+          <div class="proj-tags"><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">ETL</span><span class="tag">Data Visualization</span></div>
+        </div>
+        <div class="proj">
+          <div class="proj-top">
+            <h3>Hand Gesture Recognition System</h3>
+            <span class="proj-badge">2023</span>
+          </div>
+          <p>Developed a CNN-based real-time gesture recognition system achieving <b>94%+ accuracy</b>; documented training methodology and evaluation protocol.</p>
+          <div class="proj-tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">OpenCV</span><span class="tag">Computer Vision</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-head"><span class="key">04</span><h2>Skills</h2><span class="rule"></span></div>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <div class="sg-title">programming</div>
+          <div class="sg-items"><span class="tag">C</span><span class="tag">C++</span><span class="tag">Java</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">JavaScript</span><span class="tag">Git</span><span class="tag">Data Structures</span><span class="tag">Algorithms</span><span class="tag">Unit Testing</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">ai &amp; machine learning</div>
+          <div class="sg-items"><span class="tag">LLM Fine-Tuning (LoRA, SFT)</span><span class="tag">RAG</span><span class="tag">LLM Evaluation</span><span class="tag">Prompt Engineering</span><span class="tag">Generative AI</span><span class="tag">CNNs</span><span class="tag">NLP</span><span class="tag">Time Series</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span><span class="tag">Pandas</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">backend &amp; systems</div>
+          <div class="sg-items"><span class="tag">REST APIs</span><span class="tag">MySQL</span><span class="tag">Data Pipelines</span><span class="tag">LLM Agents / MCP</span><span class="tag">Testing &amp; Debugging</span><span class="tag">Code Reviews</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">tools &amp; platforms</div>
+          <div class="sg-items"><span class="tag">GitHub</span><span class="tag">AWS</span><span class="tag">Azure AI</span><span class="tag">Claude Code</span><span class="tag">VS Code</span><span class="tag">Power BI</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="section-head"><span class="key">05</span><h2>Certifications</h2><span class="rule"></span></div>
+      <div class="field-groups">
+        <div class="field-group"><span class="fg-label">2022</span><span class="fg-value">IT Essentials — Cisco</span></div>
+        <div class="field-group"><span class="fg-label">2023</span><span class="fg-value">Cybersecurity Essentials — Cisco</span></div>
+        <div class="field-group"><span class="fg-label">2022</span><span class="fg-value">Programming Essentials in C++ — Cisco</span></div>
+        <div class="field-group"><span class="fg-label">2023</span><span class="fg-value">AWS Workshop — JNTU Kakinada</span></div>
+        <div class="field-group"><span class="fg-label">2021</span><span class="fg-value">Programming Essentials in Python — Cisco</span></div>
+        <div class="field-group"><span class="fg-label">2022</span><span class="fg-value">NPTEL Cloud Computing — NPTEL</span></div>
+        <div class="field-group"><span class="fg-label">—</span><span class="fg-value">Robotic Process Automation (RPA) — EduSkills Foundation</span></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head"><span class="key">06</span><h2>Contact</h2><span class="rule"></span></div>
+      <p style="margin:0 0 22px; max-width:56ch; color:var(--muted);">Reach out for collaborations, research discussions, or professional inquiries.</p>
+      <div class="contact-grid">
+        <a class="contact-item" href="mailto:harshithabommi2024@gmail.com">
+          <span class="ck">email</span><span class="cv">harshithabommi2024@gmail.com</span>
+        </a>
+        <a class="contact-item" href="tel:+19403261295">
+          <span class="ck">phone</span><span class="cv">(940) 326-1295</span>
+        </a>
+        <a class="contact-item" href="https://www.linkedin.com/in/bommi-harshitha-4686ba250" target="_blank" rel="noopener">
+          <span class="ck">linkedin</span><span class="cv">linkedin.com/in/bommi-harshitha-4686ba250</span>
+        </a>
+        <a class="contact-item" href="https://github.com/harshithabommi2025" target="_blank" rel="noopener">
+          <span class="ck">github</span><span class="cv">github.com/harshithabommi2025</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>Designed &amp; developed by Harshitha Bommi · 2026</footer>
+
+<script>
+  // mobile menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.textContent = open ? 'Close' : 'Menu';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.textContent = 'Menu';
+  }));
+
+  // scroll-spy for sidebar nav
+  const sections = ['about','experience','projects','skills','certifications','contact'].map(id => document.getElementById(id));
+  const links = Array.from(document.querySelectorAll('#toc a'));
+  const setActive = (id) => {
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  sections.forEach(s => s && observer.observe(s));
+</script>
+
+</body>
+</html>
